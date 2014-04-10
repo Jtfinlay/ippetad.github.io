@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Setup | DevBreak]]></title>
+  <link href="http://IPPETAD.github.io/blog/categories/setup/atom.xml" rel="self"/>
+  <link href="http://IPPETAD.github.io/"/>
+  <updated>2014-04-09T21:21:00-06:00</updated>
+  <id>http://IPPETAD.github.io/</id>
+  <author>
+    <name><![CDATA[DevBreak]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Set Up a Multiple Author Blog]]></title>
+    <link href="http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog/"/>
+    <updated>2014-04-09T19:36:15-06:00</updated>
+    <id>http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog</id>
+    <content type="html"><![CDATA[<p>Hello, fellow bloggers. I&rsquo;ve spent some time working on this now. Let&rsquo;s get all
+this down before I forget what I&rsquo;m doing.</p>
+
+<!-- more -->
+
+<h2 id="setup">Setup</h2>
+
+<p>Basic setup is the same. Clone the source, start filling out <code>_config.yml</code>, and
+get it to a working point. In the <code>Rakefile</code>, make sure your <code>new_post</code> looks
+like the following:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+<span class="comment"># usage rake new_post[my-new-post] or rake new_post[&amp;lsquo;my new post&amp;rsquo;] or rake new_post (defaults to &amp;ldquo;new-post&amp;rdquo;)</span>
+desc &amp;ldquo;<span class="constant">Begin</span> a new post <span class="keyword">in</span> <span class="comment">#{source_dir}/#{posts_dir}&amp;rdquo;</span>
+task <span class="symbol">:new_post</span>, <span class="symbol">:title</span> <span class="keyword">do</span> |t, args|
+  <span class="keyword">if</span> args.title
+    title = args.title
+  <span class="keyword">else</span>
+    title = get_stdin(&amp;ldquo;<span class="constant">Enter</span> a title <span class="keyword">for</span> your <span class="key">post</span>: &amp;ldquo;)
+  <span class="keyword">end</span>
+  raise &amp;ldquo;<span class="comment">### You haven&amp;rsquo;t set anything up yet. First run &lt;code&gt;rake install&lt;/code&gt; to set up an Octopress theme.&amp;rdquo; unless File.directory?(source_dir)</span>
+  mkdir_p &amp;ldquo;<span class="comment">#{source_dir}/#{posts_dir}&amp;rdquo;</span>
+  filename = &amp;ldquo;<span class="comment">#{source_dir}/#{posts_dir}/#{Time.now.strftime(&amp;lsquo;%Y-%m-%d&amp;rsquo;)}-#{title.to_url}.#{new_post_ext}&amp;rdquo;</span>
+  <span class="keyword">if</span> <span class="constant">File</span>.exist?(filename)
+    abort(&amp;ldquo;rake aborted!&amp;rdquo;) <span class="keyword">if</span> ask(&amp;ldquo;<span class="comment">#{filename} already exists. Do you want to overwrite?&amp;rdquo;, [&amp;lsquo;y&amp;rsquo;, &amp;lsquo;n&amp;rsquo;]) == &amp;lsquo;n&amp;rsquo;</span>
+  <span class="keyword">end</span>
+  puts &amp;ldquo;<span class="constant">Creating</span> new <span class="key">post</span>: <span class="comment">#{filename}&amp;rdquo;</span>
+  open(filename, &amp;lsquo;w&amp;rsquo;) <span class="keyword">do</span> |post|
+    post.puts &amp;ldquo;&amp;mdash;&amp;rdquo;
+    post.puts &amp;ldquo;<span class="key">layout</span>: post&amp;rdquo;
+    post.puts &amp;ldquo;<span class="key">title</span>: <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>title.gsub(<span class="regexp"><span class="delimiter">/</span><span class="content">&amp;amp;</span><span class="delimiter">/</span></span>,&amp;rsquo;&amp;amp;&amp;rsquo;)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>&amp;rdquo;
+    <span class="comment"># This is the important bit. This&amp;rsquo;ll make sure your authors fill their name in.</span>
+    post.puts &amp;ldquo;<span class="key">author</span>: &amp;ldquo;
+    post.puts &amp;ldquo;<span class="key">date</span>: <span class="comment">#{Time.now.strftime(&amp;lsquo;%Y-%m-%d %H:%M:%S %z&amp;rsquo;)}&amp;rdquo;</span>
+    post.puts &amp;ldquo;<span class="key">comments</span>: <span class="predefined-constant">true</span>&amp;rdquo;
+    post.puts &amp;ldquo;<span class="key">categories</span>: &amp;ldquo;
+    post.puts &amp;ldquo;&amp;mdash;&amp;rdquo;
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre></div>
+</div>
+ </figure></notextile></div></p>
+
+<p>Basically, it adds an <code>author</code> field to your front-matter. Important for keeping
+track of who wrote what.</p>
+
+<h2 id="deployment">Deployment</h2>
+<p>We&rsquo;re using <a href="https://pages.github.com/">GitHub Pages</a> to do the deployment,
+which means we can take advantage of forks and pull requests as a sort of
+peer-review.</p>
+
+<p><strong>NOTE:</strong> Make sure only one person is in charge of deploying the blog. You may
+find you&rsquo;ll run into asset issues, because git doesn&rsquo;t like binary files very
+much.</p>
+
+<p>Your writers will fork the main blog repository, run <code>rake new_post[...]</code>, fill
+out their post, commit and push. In GitHub, they&rsquo;ll open a pull request, and you
+can check it out. Once you&rsquo;re ready, merge it in, and deploy it.</p>
+
+<h2 id="for-the-authors">For the Authors</h2>
+<p>I&rsquo;m assuming you&rsquo;re git-savvy, so I pardon if your not.</p>
+
+<p>Basically, you&rsquo;ll need ruby (<a href="http://rubyinstaller.org/">installer</a> for
+Windows), the ruby DevKit (same location, follow
+<a href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit">these instructions</a>),
+and <a href="http://rubygems.org/pages/download">RubyGems</a>.</p>
+
+<p>Get into the command line, find the spot you want to hold all the files for the
+blog, and run:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+git clone THE_REPO_URL DIR source
+</pre></div>
+</div>
+ </figure></notextile></div></p>
+
+<p>This&rsquo;ll clone the repository down and checkout the <code>source</code> branch. Get into the
+new directory, and run <code>bundle install</code>. This installs all the gems you&rsquo;ll need
+to use and preview the blog. To make a post, do the following:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+rake new_post[$TITLE]
+$EDITOR source/_posts/$DATE-$TITLE
+</pre></div>
+</div>
+ </figure></notextile></div></p>
+
+<p>To check it out and make sure it looks all right:</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="CodeRay">
+  <div class="code"><pre>
+rake generate
+rake preview
+</pre></div>
+</div>
+ </figure></notextile></div></p>
+
+<p>Then, head over to <code>localhost:4000</code>. When everything looks good, commit and push
+to your fork. Open a pull request against the main repository&rsquo;s <code>source</code> branch,
+and let the review happen.</p>
+
+<p>I hope that wasn&rsquo;t too complicated. This is pretty long for a new blog.</p>
+
+<p>Cheers,</p>
+
+<p>Andrew</p>
+]]></content>
+  </entry>
+  
+</feed>
