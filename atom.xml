@@ -4,7 +4,7 @@
   <title><![CDATA[DevBreak]]></title>
   <link href="http://IPPETAD.github.io/atom.xml" rel="self"/>
   <link href="http://IPPETAD.github.io/"/>
-  <updated>2014-04-09T21:21:00-06:00</updated>
+  <updated>2014-04-10T18:58:35-06:00</updated>
   <id>http://IPPETAD.github.io/</id>
   <author>
     <name><![CDATA[DevBreak]]></name>
@@ -18,8 +18,8 @@
     <link href="http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog/"/>
     <updated>2014-04-09T19:36:15-06:00</updated>
     <id>http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog</id>
-    <content type="html"><![CDATA[<p>Hello, fellow bloggers. I&rsquo;ve spent some time working on this now. Let&rsquo;s get all
-this down before I forget what I&rsquo;m doing.</p>
+    <content type="html"><![CDATA[<p>Hello, fellow bloggers. I’ve spent some time working on this now. Let’s get all
+this down before I forget what I’m doing.</p>
 
 <!-- more -->
 
@@ -66,22 +66,22 @@ task <span class="symbol">:new_post</span>, <span class="symbol">:title</span> <
 track of who wrote what.</p>
 
 <h2 id="deployment">Deployment</h2>
-<p>We&rsquo;re using <a href="https://pages.github.com/">GitHub Pages</a> to do the deployment,
+<p>We’re using <a href="https://pages.github.com/">GitHub Pages</a> to do the deployment,
 which means we can take advantage of forks and pull requests as a sort of
 peer-review.</p>
 
 <p><strong>NOTE:</strong> Make sure only one person is in charge of deploying the blog. You may
-find you&rsquo;ll run into asset issues, because git doesn&rsquo;t like binary files very
+find you’ll run into asset issues, because git doesn’t like binary files very
 much.</p>
 
 <p>Your writers will fork the main blog repository, run <code>rake new_post[...]</code>, fill
-out their post, commit and push. In GitHub, they&rsquo;ll open a pull request, and you
-can check it out. Once you&rsquo;re ready, merge it in, and deploy it.</p>
+out their post, commit and push. In GitHub, they’ll open a pull request, and you
+can check it out. Once you’re ready, merge it in, and deploy it.</p>
 
 <h2 id="for-the-authors">For the Authors</h2>
-<p>I&rsquo;m assuming you&rsquo;re git-savvy, so I pardon if your not.</p>
+<p>I’m assuming you’re git-savvy, so I pardon if your not.</p>
 
-<p>Basically, you&rsquo;ll need ruby (<a href="http://rubyinstaller.org/">installer</a> for
+<p>Basically, you’ll need ruby (<a href="http://rubyinstaller.org/">installer</a> for
 Windows), the ruby DevKit (same location, follow
 <a href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit">these instructions</a>),
 and <a href="http://rubygems.org/pages/download">RubyGems</a>.</p>
@@ -96,8 +96,8 @@ git clone THE_REPO_URL DIR source
 </div>
  </figure></notextile></div>
 
-<p>This&rsquo;ll clone the repository down and checkout the <code>source</code> branch. Get into the
-new directory, and run <code>bundle install</code>. This installs all the gems you&rsquo;ll need
+<p>This’ll clone the repository down and checkout the <code>source</code> branch. Get into the
+new directory, and run <code>bundle install</code>. This installs all the gems you’ll need
 to use and preview the blog. To make a post, do the following:</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"> <div class="CodeRay">
@@ -119,10 +119,10 @@ rake preview
  </figure></notextile></div>
 
 <p>Then, head over to <code>localhost:4000</code>. When everything looks good, commit and push
-to your fork. Open a pull request against the main repository&rsquo;s <code>source</code> branch,
+to your fork. Open a pull request against the main repository’s <code>source</code> branch,
 and let the review happen.</p>
 
-<p>I hope that wasn&rsquo;t too complicated. This is pretty long for a new blog.</p>
+<p>I hope that wasn’t too complicated. This is pretty long for a new blog.</p>
 
 <p>Cheers,</p>
 
