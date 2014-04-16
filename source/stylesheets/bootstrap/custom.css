@@ -1,0 +1,27 @@
+.navbar-inner {
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	padding: 6px 0;
+	background: white;
+}
+.navbar .container {
+	width: 1170px;
+}
+.navbar .brand {
+	color: #444;
+}
+h1 {
+	font-size: 33px;
+}
+.well {
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+	background-color: #fff;
+	border: 0px;
+	border-left: 1px solid #aaa;
+}
+
+.page li>a {
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
