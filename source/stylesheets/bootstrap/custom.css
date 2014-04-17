@@ -82,7 +82,7 @@ body {
 	background: white;
 }
 .navbar .container {
-	width: 1170px;
+	max-width: 1170px;
 }
 .navbar .brand {
 	color: #444;
