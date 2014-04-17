@@ -1,3 +1,80 @@
+html, body, .container, .content {
+	height: 100%;
+	padding: 0;
+}
+body {
+	padding-bottom: 0;
+}
+.author {
+	margin-bottom: 40px;
+}
+.author-wrapper {
+	margin-top: 20px;
+}
+.author-title {
+	float: left;
+	position: relative;
+	width: 100%;
+}
+.author-title img {
+	float: left;
+	width: 65px;
+	margin-bottom: 10px;
+}
+.author-name {
+	margin: 0 0 0 75px;
+}
+.author-location {
+	margin-left: 75px;
+}
+.page-title {
+	float: left;
+	position: relative;
+	width: 100%;
+}
+.page-title img {
+	width: 65px;
+	float: left;
+	margin-bottom: 20px;
+}
+.container {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -80px;
+	padding-bottom: 90px;
+}
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -80px;
+}
+.push {
+	height: 80px;
+}
+.page-header {
+	margin: 20px 0;
+	border-bottom: 0;
+}
+.entry-title {
+	margin: 0 0 0 75px;
+}
+.page-header .meta {
+	margin: 0;
+	margin-left: 75px;
+}
+.page-footer {
+	margin: 0;
+	padding: 0;
+	bottom: 0;
+	height: 80px;
+	background-color: #eee;
+	border: 1px solid #d4d4d4;
+}
+.page-footer>p {
+	padding: 25px 0;
+}
 .navbar-inner {
 	-webkit-border-radius: 0px;
 	border-radius: 0px;
@@ -21,7 +98,7 @@ h1 {
 	border-left: 1px solid #aaa;
 }
 
-.page li>a {
+.pager li>a {
 	-webkit-border-radius: 0px;
 	border-radius: 0px;
 }

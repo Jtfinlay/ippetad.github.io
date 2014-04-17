@@ -2,6 +2,7 @@
 layout: post
 title: "How to Set up a Multiple Author Blog"
 author: Andrew Fontaine
+author-img: andrew_fontaine.png
 date: 2014-04-09 19:36:15 -0600
 comments: true
 categories: setup
