@@ -1,0 +1,358 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to Set Up a Multiple Author Blog - DevBreak</title>
+  <meta name="author" content="DevBreak">
+
+  
+  <meta name="description" content="Hello, fellow bloggers. I’ve spent some time working on this now. Let’s get all
+this down before I forget what I’m doing. Setup Basic setup is the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DevBreak" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DevBreak</a></h1>
+  
+    <h2>We break things</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:IPPETAD.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to Set Up a Multiple Author Blog</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-09T19:36:15-06:00" pubdate data-updated="true">Apr 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Hello, fellow bloggers. I’ve spent some time working on this now. Let’s get all
+this down before I forget what I’m doing.</p>
+
+<!-- more -->
+
+<h2 id="setup">Setup</h2>
+
+<p>Basic setup is the same. Clone the source, start filling out <code>_config.yml</code>, and
+get it to a working point. In the <code>Rakefile</code>, make sure your <code>new_post</code> looks
+like the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="CodeRay">
+  <div class="code"><pre>
+<span class="comment"># usage rake new_post[my-new-post] or rake new_post['my new post'] or rake new_post (defaults to &quot;new-post&quot;)</span>
+desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Begin a new post in </span><span class="inline"><span class="inline-delimiter">#{</span>source_dir<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span>posts_dir<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+task <span class="symbol">:new_post</span>, <span class="symbol">:title</span> <span class="keyword">do</span> |t, args|
+  <span class="keyword">if</span> args.title
+    title = args.title
+  <span class="keyword">else</span>
+    title = get_stdin(<span class="string"><span class="delimiter">&quot;</span><span class="content">Enter a title for your post: </span><span class="delimiter">&quot;</span></span>)
+  <span class="keyword">end</span>
+  raise <span class="string"><span class="delimiter">&quot;</span><span class="content">### You haven't set anything up yet. First run `rake install` to set up an Octopress theme.</span><span class="delimiter">&quot;</span></span> <span class="keyword">unless</span> <span class="constant">File</span>.directory?(source_dir)
+  mkdir_p <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>source_dir<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span>posts_dir<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  filename = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>source_dir<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span>posts_dir<span class="inline-delimiter">}</span></span><span class="content">/</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Time</span>.now.strftime(<span class="string"><span class="delimiter">'</span><span class="content">%Y-%m-%d</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="content">-</span><span class="inline"><span class="inline-delimiter">#{</span>title.to_url<span class="inline-delimiter">}</span></span><span class="content">.</span><span class="inline"><span class="inline-delimiter">#{</span>new_post_ext<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">if</span> <span class="constant">File</span>.exist?(filename)
+    abort(<span class="string"><span class="delimiter">&quot;</span><span class="content">rake aborted!</span><span class="delimiter">&quot;</span></span>) <span class="keyword">if</span> ask(<span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>filename<span class="inline-delimiter">}</span></span><span class="content"> already exists. Do you want to overwrite?</span><span class="delimiter">&quot;</span></span>, [<span class="string"><span class="delimiter">'</span><span class="content">y</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">n</span><span class="delimiter">'</span></span>]) == <span class="string"><span class="delimiter">'</span><span class="content">n</span><span class="delimiter">'</span></span>
+  <span class="keyword">end</span>
+  puts <span class="string"><span class="delimiter">&quot;</span><span class="content">Creating new post: </span><span class="inline"><span class="inline-delimiter">#{</span>filename<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+  open(filename, <span class="string"><span class="delimiter">'</span><span class="content">w</span><span class="delimiter">'</span></span>) <span class="keyword">do</span> |post|
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">---</span><span class="delimiter">&quot;</span></span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">layout: post</span><span class="delimiter">&quot;</span></span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">title: </span><span class="char">\&quot;</span><span class="inline"><span class="inline-delimiter">#{</span>title.gsub(<span class="regexp"><span class="delimiter">/</span><span class="content">&amp;</span><span class="delimiter">/</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">&amp;amp;</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="char">\&quot;</span><span class="delimiter">&quot;</span></span>
+    <span class="comment"># This is the important bit. This'll make sure your authors fill their name in.</span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">author: </span><span class="delimiter">&quot;</span></span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">date: </span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">Time</span>.now.strftime(<span class="string"><span class="delimiter">'</span><span class="content">%Y-%m-%d %H:%M:%S %z</span><span class="delimiter">'</span></span>)<span class="inline-delimiter">}</span></span><span class="delimiter">&quot;</span></span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">comments: true</span><span class="delimiter">&quot;</span></span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">categories: </span><span class="delimiter">&quot;</span></span>
+    post.puts <span class="string"><span class="delimiter">&quot;</span><span class="content">---</span><span class="delimiter">&quot;</span></span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre></div>
+</div>
+ </figure></notextile></div>
+
+<p>Basically, it adds an <code>author</code> field to your front-matter. Important for keeping
+track of who wrote what.</p>
+
+<h2 id="deployment">Deployment</h2>
+<p>We’re using <a href="https://pages.github.com/">GitHub Pages</a> to do the deployment,
+which means we can take advantage of forks and pull requests as a sort of
+peer-review.</p>
+
+<p><strong>NOTE:</strong> Make sure only one person is in charge of deploying the blog. You may
+find you’ll run into asset issues, because git doesn’t like binary files very
+much.</p>
+
+<p>Your writers will fork the main blog repository, run <code>rake new_post[...]</code>, fill
+out their post, commit and push. In GitHub, they’ll open a pull request, and you
+can check it out. Once you’re ready, merge it in, and deploy it.</p>
+
+<h2 id="for-the-authors">For the Authors</h2>
+<p>I’m assuming you’re git-savvy, so I pardon if your not.</p>
+
+<p>Basically, you’ll need ruby (<a href="http://rubyinstaller.org/">installer</a> for
+Windows), the ruby DevKit (same location, follow
+<a href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit">these instructions</a>),
+and <a href="http://rubygems.org/pages/download">RubyGems</a>.</p>
+
+<p>Get into the command line, find the spot you want to hold all the files for the
+blog, and run:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="CodeRay">
+  <div class="code"><pre>
+git clone THE_REPO_URL DIR source
+</pre></div>
+</div>
+ </figure></notextile></div>
+
+<p>This’ll clone the repository down and checkout the <code>source</code> branch. Get into the
+new directory, and run <code>bundle install</code>. This installs all the gems you’ll need
+to use and preview the blog. To make a post, do the following:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="CodeRay">
+  <div class="code"><pre>
+rake new_post[$TITLE]
+$EDITOR source/_posts/$DATE-$TITLE
+</pre></div>
+</div>
+ </figure></notextile></div>
+
+<p>To check it out and make sure it looks all right:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"> <div class="CodeRay">
+  <div class="code"><pre>
+rake generate
+rake preview
+</pre></div>
+</div>
+ </figure></notextile></div>
+
+<p>Then, head over to <code>localhost:4000</code>. When everything looks good, commit and push
+to your fork. Open a pull request against the main repository’s <code>source</code> branch,
+and let the review happen.</p>
+
+<p>I hope that wasn’t too complicated. This is pretty long for a new blog.</p>
+
+<p>Cheers,</p>
+
+<p>Andrew</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andrew Fontaine</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-09T19:36:15-06:00" pubdate data-updated="true">Apr 9<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/fontaine/'>Fontaine</a>, <a class='category' href='/blog/categories/setup/'>setup</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog/" data-via="" data-counturl="http://IPPETAD.github.io/blog/2014/04/09/how-to-set-up-a-multiple-author-blog/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/04/09/how-to-set-up-a-multiple-author-blog/">How to Set Up a Multiple Author Blog</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/IPPETAD">@IPPETAD</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'IPPETAD',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - DevBreak -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

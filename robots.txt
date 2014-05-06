@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://IPPETAD.github.io/sitemap.xml 
