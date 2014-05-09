@@ -5,10 +5,10 @@ author: "James Finlay"
 author-img: james_finlay.png
 date: 2014-05-07 13:07:43 -0600
 comments: true
-categories: [GIS, Nodejs, Android]
+categories: [GIS, Nodejs, Android, Game]
 ---
 
-The outline of a side-project I implemented that brings the game of Pokemon to the real world.
+Last summer I implemented a location-based game for Android during my spare time. The game mimics the exploration and training aspects of Pokemon, but in the real world. This post explains how the project is implemented, as well as a view on the back-end technologies.
 
 <!-- more -->
 
@@ -20,15 +20,17 @@ This post is about the technology and implementation of the geolocation service 
 
 ## ArcGIS
 
-[ArcGIS](http://www.arcgis.com) is a mapping platform for Geographic Information Systems (GIS). I learned it originally through my work term at the provincial government. GIS platforms provide a similar service to Google Maps, except much more. Instead of having a just shape imagery or satellite imagery, such as you would have on Google Maps or Bing, you can overlay as many different layers as you want. There are layers with just foresty information, landmarks, mines, rivers, and more. 
+[ArcGIS](http://www.arcgis.com) is a mapping platform for Geographic Information Systems (GIS). I learned it originally through my work term at the provincial government. GIS platforms provide a similar service to Google Maps, where you interact with digital maps, but they provide much more depth and control. Instead of having a just shape imagery or satellite imagery, such as you would have on Google Maps or Bing, you can overlay as many different layers as you want. There are layers with foresty information, landmarks, mines, rivers, and more. 
 
 
 {% img /images/posts/2014-04-11-pokemon-irl/google_maps.jpg %}
 
 
+GIS platforms can also provide 3D modelling tools and more advanced plug-ins, but this is out of scope of the project.
+
 There are a variety of different (and cheaper) [alternatives](http://en.wikipedia.org/wiki/List_of_geographic_information_systems_software#Notable_commercial_or_proprietary_GIS_software) to ArcGIS, though Esri's service provides a lot of useful features, foremost being .NET libraries and an integrated Python console. I found a few open source GIS programs, though I haven't had the opportunity to work with them.
 
-To make the geolocation queries quick, I used ArcGIS' Python package to merge all used layers into a single shapefile. From the result I performed a simple location query to see what feature was hit. With the data all in the proper projections, the API is very easy to work with -- though the process is slow when intersecting a whole province. 
+To make the geolocation queries fast during runtime, I used ArcGIS' Python package to merge all used layers into a single shapefile. From the result I perform a quick location query to see what feature was hit. With the data all in the proper projections, the API is very easy to work with -- though building the formatted map is slow when intersecting a whole province. 
 
 {% coderay lang:python %}
 # Cursors
